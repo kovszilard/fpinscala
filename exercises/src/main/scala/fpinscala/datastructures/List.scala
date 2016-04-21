@@ -117,5 +117,26 @@ object List { // `List` companion object. Contains functions for creating and wo
     foldRight(l1, l2)(Cons(_,_))
   }
 
-  def map[A,B](l: List[A])(f: A => B): List[B] = sys.error("todo")
+  def addOne(l: List[Int]): List[Int] = l match {
+    case Nil => Nil
+    case Cons(h, t) => Cons(h + 1, addOne(t))
+  }
+
+  def doubleLisToStringList(l: List[Double]): List[String] = {
+    foldRight(l, Nil :List[String])((a, b) => Cons(a.toString,b))
+  }
+
+  def map[A,B](l: List[A])(f: A => B): List[B] = foldRight(l, Nil: List[B])((a, acc) => Cons(f(a) ,acc))
+
+  def filter[A](l: List[A])(f: A => Boolean): List[A] =
+    foldRight(l, Nil: List[A])((h, t) => if (f(h)) Cons(h, t) else t)
+
+  def concat[A](l: List[List[A]]): List[A] =
+    foldRight(l, Nil:List[A])(append)
+
+  def flatMap[A,B](l: List[A])(f: A => List[B]): List[B] =
+    concat(map(l)(f))
+
+  def filter2[A](l: List[A])(f: A => Boolean): List[A] =
+    flatMap(l)(a => if (f(a)) List(a) else Nil)
 }
