@@ -55,9 +55,10 @@ object Option {
   }
 
   def variance2(xs: Seq[Double]): Option[Double] = {
-    for {
-      m <- mean(xs)
-    } mean(xs.map(x => math.pow(x - m, 2)))
+    //for {
+    //  m <- mean(xs)
+    //} mean(xs.map(x => math.pow(x - m, 2)))
+    ???
   }
 
 
@@ -70,7 +71,7 @@ object Option {
     for {
       aa <- a
       bb <- b
-    } f(aa, bb)
+    } yield f(aa, bb)
   }
 
   def sequence[A](a: List[Option[A]]): Option[List[A]] = sys.error("todo")
